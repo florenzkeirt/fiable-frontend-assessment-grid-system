@@ -1,35 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import GridGenerator from './components/grid-generator';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [inputValue, setInputValue] = useState(null);
+  const [inputString, setInputString] = useState(null);
+
+  const handleGenerate = () => {
+    setInputString(inputValue);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleGenerate();
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Box
+      sx={{
+        px: 4,
+        py: 5,
+        borderRadius: 2,
+        bgcolor: 'white',
+        display: 'grid',
+        gap: 2,
+        maxWidth: '500px',
+      }}
+    >
+      <Typography variant="h5" gutterBottom>
+        Grid Object Generator
+      </Typography>
+      
+      <TextField
+        required
+        focused
+        id="inputString"
+        label="Input String"
+        placeholder="x,y DIRECTION"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+      />
+      
+      <Button 
+        variant="contained" 
+        disableElevation 
+        fullWidth 
+        size="large"
+        onClick={handleGenerate}
+      >
+        GENERATE
+      </Button>
+      <GridGenerator inputString={inputString} />
+    </Box>
+  );
 }
 
-export default App
+export default App;
